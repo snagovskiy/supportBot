@@ -7,7 +7,7 @@ const bot = new Bot(token);
 
 bot.command(
   "start",
-  (ctx) => ctx.reply("Добро пожаловать! Запущен и работаю."),
+  (ctx) => ctx.reply("Добро пожаловать! Запущен и работаю..."),
 );
 bot.command("ping", (ctx) => ctx.reply(`Понг! ${new Date()}`));
 
