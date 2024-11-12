@@ -1,24 +1,24 @@
 import { Menu } from "@grammyjs/menu";
-const {
-  speedtest,
-  ping,
-  tracert,
-  internetSettingIpoe,
-  internetSettingPppoeWin10,
-  internetSettingPppoeWin7,
-  routerSettings,
-  iptv,
-  atv,
-  dtv,
-  psbPay,
-  terminalPay,
-  credit,
-  abon,
-  zayavki,
-  blocktarif,
-  vosstanov,
-  vIp,
-} = require("./constText");
+// const {
+//   speedtest,
+//   ping,
+//   tracert,
+//   internetSettingIpoe,
+//   internetSettingPppoeWin10,
+//   internetSettingPppoeWin7,
+//   routerSettings,
+//   iptv,
+//   atv,
+//   dtv,
+//   psbPay,
+//   terminalPay,
+//   credit,
+//   abon,
+//   zayavki,
+//   blocktarif,
+//   vosstanov,
+//   vIp,
+// } = require("./constText");
 
 //Главное меню бота
 const menu = new Menu("root-menu")
