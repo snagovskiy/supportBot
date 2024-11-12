@@ -4,8 +4,8 @@ if (!token) throw new Error("BOT_TOKEN не установлен");
 
 const bot = new Bot(token);
 
-import { welcomeText } = from "./modules/constText.js";
-import { menu } = from "./modules/menu.js";
+import { welcomeText } from "./modules/constText.js";
+import { menu } from "./modules/menu.js";
 
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
