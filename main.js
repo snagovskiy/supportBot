@@ -4,30 +4,11 @@ if (!token) throw new Error("BOT_TOKEN не установлен");
 
 const bot = new Bot(token);
 
-// import { welcomeText } from "./modules/constText.js";
-// import { menu } from "./modules/menu.js";
-
-bot.api.setMyCommands([
-  { command: "start", description: "Перезапустить бот" },
-  { command: "menu", description: "Главное меню" },
-]);
-
-// Отвечаем на команду /start
-bot.command("start", async (ctx) => {
-  await ctx.reply(`<b>${ctx.from?.first_name}</b>, <b>привет!</b> 😀️ \n\n🤖️ Меня зовут Виталик. \n\n⛑️ Я помогу тебе настроить доступ к интернету и телевидению, а также диагностировать неисправности, ответить на часто задаваемые вопросы. \n\n📋️ Перейти в меню /menu`, {
-    parse_mode: "HTML",
-    disable_web_page_preview: true,
-  });
-});
-
-// Подключение меню root-menu
-// bot.use(menu);
-
-// bot.command("menu", async (ctx) => {
-//   // Отправляем меню.
-//   await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
-// });
-
+bot.command(
+  "start",
+  (ctx) => ctx.reply("Добро пожаловать! Запущен и работаю."),
+);
+bot.command("ping", (ctx) => ctx.reply(`Понг! ${new Date()}`));
 const handleUpdate = webhookCallback(bot, "std/http");
 
 Deno.serve(async (req) => {
