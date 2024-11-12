@@ -4,7 +4,7 @@ if (!token) throw new Error("BOT_TOKEN не установлен");
 
 const bot = new Bot(token);
 
-import { welcomeText } from "./modules/constText.js";
+// import { welcomeText } from "./modules/constText.js";
 // import { menu } from "./modules/menu.js";
 
 bot.api.setMyCommands([
@@ -14,7 +14,7 @@ bot.api.setMyCommands([
 
 // Отвечаем на команду /start
 bot.command("start", async (ctx) => {
-  await ctx.reply(`<b>${ctx.from?.first_name}</b>` + welcomeText, {
+  await ctx.reply(`<b>${ctx.from?.first_name}</b>, <b>привет!</b> 😀️ \n\n🤖️ Меня зовут Виталик. \n\n⛑️ Я помогу тебе настроить доступ к интернету и телевидению, а также диагностировать неисправности, ответить на часто задаваемые вопросы. \n\n📋️ Перейти в меню /menu`, {
     parse_mode: "HTML",
     disable_web_page_preview: true,
   });
