@@ -1,4 +1,4 @@
-const { Menu } = require("@grammyjs/menu");
+const { Menu } = require("https://deno.land/x/grammy@v1.31.2/mod.ts");
 const {
   speedtest,
   ping,
