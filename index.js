@@ -1,11 +1,8 @@
-const { Bot, webhookCallback } = require("grammy");
 const { welcomeText } = require("./modules/constText");
 const { menu } = require("./modules/menu");
 
 const express = require("express");
 const app = express();
-
-const bot = new Bot(myEnv.BOT_TOKEN, { botInfo: JSON.parse(myEnv.BOT_INFO) });
 
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
