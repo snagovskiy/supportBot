@@ -1,3 +1,5 @@
+import { Menu } from "@grammyjs/menu";
+
 //Главное меню бота
 const menu = new Menu("root-menu")
   .submenu("🌐️ Интернет", "internet-menu-main")
