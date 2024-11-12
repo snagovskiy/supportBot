@@ -1,4 +1,5 @@
 import { Bot, webhookCallback } from "https://deno.land/x/grammy@v1.31.2/mod.ts";
+
 const token = Deno.env.get("BOT_TOKEN");
 if (!token) throw new Error("BOT_TOKEN не установлен");
 
@@ -9,6 +10,7 @@ bot.command(
   (ctx) => ctx.reply("Добро пожаловать! Запущен и работаю."),
 );
 bot.command("ping", (ctx) => ctx.reply(`Понг! ${new Date()}`));
+
 const handleUpdate = webhookCallback(bot, "std/http");
 
 Deno.serve(async (req) => {
