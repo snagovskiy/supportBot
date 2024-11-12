@@ -36,6 +36,6 @@ jobs:
         with:
           project: "alnetbot"
           entrypoint: "main.js"
-          root: "/"
+          root: ""
           
           
