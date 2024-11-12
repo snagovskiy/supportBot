@@ -1,6 +1,6 @@
 import { webhookCallback } from "https://deno.land/x/grammy@v1.31.2/mod.ts";
 // Вы можете изменить это, чтобы правильно импортировать свой объект `Bot`.
-import bot from "./index";
+import bot from "./index.js";
 
 const handleUpdate = webhookCallback(bot, "std/http");
 
