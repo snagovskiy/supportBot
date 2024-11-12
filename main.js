@@ -21,12 +21,12 @@ bot.command("start", async (ctx) => {
 });
 
 // Подключение меню root-menu
-bot.use(menu);
+// bot.use(menu);
 
-bot.command("menu", async (ctx) => {
-  // Отправляем меню.
-  await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
-});
+// bot.command("menu", async (ctx) => {
+//   // Отправляем меню.
+//   await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
+// });
 
 const handleUpdate = webhookCallback(bot, "std/http");
 
