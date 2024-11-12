@@ -4,20 +4,41 @@ if (!token) throw new Error("BOT_TOKEN не установлен");
 
 const bot = new Bot(token);
 
-import bot from "./index.js";
+import { welcomeText } = from "./modules/constText.js";
+import { menu } = from "./modules/menu.js";
+
+bot.api.setMyCommands([
+  { command: "start", description: "Перезапустить бот" },
+  { command: "menu", description: "Главное меню" },
+]);
+
+// Отвечаем на команду /start
+bot.command("start", async (ctx) => {
+  await ctx.reply(`<b>${ctx.from?.first_name}</b>` + welcomeText, {
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+  });
+});
+
+// Подключение меню root-menu
+bot.use(menu);
+
+bot.command("menu", async (ctx) => {
+  // Отправляем меню.
+  await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
+});
 
 const handleUpdate = webhookCallback(bot, "std/http");
 
 Deno.serve(async (req) => {
-  if (req.method === "POST") {
+  try {
     const url = new URL(req.url);
-    if (url.pathname.slice(1) === bot.token) {
-      try {
-        return await handleUpdate(req);
-      } catch (err) {
-        console.error(err);
-      }
+    if (url.searchParams.get("secret") !== bot.token) {
+      return new Response("not allowed", { status: 405 });
     }
+    return await handleUpdate(req);
+  } catch (err) {
+    console.error(err);
   }
   return new Response();
 });
