@@ -2,9 +2,9 @@
   "name": "bot",
   "version": "1.0.0",
   "description": "",
-  "main": "main.ts",
+  "main": "main.js",
   "scripts": {
-    "start": "node main.ts"
+    "start": "node main.js"
   },
   "keywords": [],
   "author": "Alexander Snagovsky",
