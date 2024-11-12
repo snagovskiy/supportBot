@@ -1,4 +1,4 @@
-import { Menu } from "https://deno.land/x/grammy@v1.31.2/mod.ts";
+import { Menu } from "@grammyjs/menu";
 const {
   speedtest,
   ping,
