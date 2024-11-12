@@ -5,7 +5,7 @@ const { menu } = require("./modules/menu");
 const express = require("express");
 const app = express();
 
-const bot = new Bot(myEnv.BOT_TOKEN, { botInfo: JSON.parse(myEnv.BOT_INFO) );
+const bot = new Bot(env.BOT_TOKEN, { botInfo: JSON.parse(env.BOT_INFO) });
 
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
