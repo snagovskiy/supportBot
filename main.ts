@@ -1,5 +1,12 @@
 import { Bot, webhookCallback } from "https://deno.land/x/grammy@v1.31.2/mod.ts";
 
+const express = require("express");
+const app = express();
+
+app.get("/", function (req, res) {
+  res.send("Hello World");
+});
+
 const token = Deno.env.get("BOT_TOKEN");
 if (!token) throw new Error("BOT_TOKEN не установлен.");
 
