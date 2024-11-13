@@ -19,7 +19,7 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<Response> { 
-    
+const bot = new Bot(env.BOT_TOKEN, { botInfo: JSON.parse(env.BOT_INFO) });    
 
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
