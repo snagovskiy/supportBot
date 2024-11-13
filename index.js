@@ -6,13 +6,6 @@ export interface Env {
   BOT_INFO: string;
   BOT_TOKEN: string;
 };
-
-export default {
-  async fetch(request, env, ctx) {
-    return new Response('Hello World!');
-  },
-};
-
 export default {
   async fetch(
     request: Request,
