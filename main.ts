@@ -5,6 +5,11 @@ if (!token) throw new Error("BOT_TOKEN не установлен");
 
 const bot = new Bot(token);
 
+import express from "express";
+
+const app = express(); // или то, что вы используете
+app.use(express.json()); // спарсите тело JSON запроса
+
 bot.command(
   "start",
   (ctx) => ctx.reply("Добро пожаловать! Запущен и работаю..."),
@@ -12,6 +17,7 @@ bot.command(
 bot.command("ping", (ctx) => ctx.reply(`Понг! ${new Date()}`));
 
 const handleUpdate = webhookCallback(bot, "std/http");
+app.use(webhookCallback(bot, "express"));
 
 Deno.serve(async (req) => {
   try {
