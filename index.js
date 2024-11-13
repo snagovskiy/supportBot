@@ -1,8 +1,25 @@
+import { Bot, Context, webhookCallback } from "grammy";
 const { welcomeText } = require("./modules/constText");
 const { menu } = require("./modules/menu");
 
-const express = require("express");
-const app = express();
+export interface Env { 
+  BOT_INFO: string;
+  BOT_TOKEN: string;
+};
+
+export default {
+  async fetch(request, env, ctx) {
+    return new Response('Hello World!');
+  },
+};
+
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> { 
+    
 
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
@@ -25,4 +42,7 @@ bot.command("menu", async (ctx) => {
   await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
 });
 
-app.use(webhookCallback(bot, "express"));
+  return webhookCallback(bot, "cloudflare-mod")(request);
+    
+  },
+};
