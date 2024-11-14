@@ -2,16 +2,8 @@ import { Bot, Context, webhookCallback } from "grammy";
 const { welcomeText } = require("./modules/constText");
 const { menu } = require("./modules/menu");
 
-export interface Env { 
-  BOT_INFO: string;
-  BOT_TOKEN: string;
-};
 export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext,
-  ): Promise<Response> { 
+  async fetch(request, env, ctx) { 
 const bot = new Bot(env.BOT_TOKEN, { botInfo: JSON.parse(env.BOT_INFO) });    
 
 bot.api.setMyCommands([
