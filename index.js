@@ -11,7 +11,7 @@ bot.api.setMyCommands([
   { command: "menu", description: "Главное меню" },
 ]);
 
-// Отвечаем на команду /start
+// Отвечаем на команду  /start
 bot.command("start", async (ctx) => {
   await ctx.reply(`<b>${ctx.from?.first_name}</b>` + welcomeText, {
     parse_mode: "HTML",
