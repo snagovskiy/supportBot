@@ -1,6 +1,6 @@
 # supportBot
 Example of a support bot, answers to frequently asked questions
-The bot is written in JavaScript using the library grammY
+The bot is written in JavaScript using the library grammY.
 
 1. Clone the repository
 2. Use: npm i
