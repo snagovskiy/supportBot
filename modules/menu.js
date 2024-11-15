@@ -17,7 +17,7 @@ const {
   zayavki,
   blocktarif,
   vosstanov,
-  vIp,
+  vIp
 } = require("./constText");
 
 //Главное меню бота
