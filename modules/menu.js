@@ -1,5 +1,5 @@
-const { Menu } = require("@grammyjs/menu");
-const {
+import { Menu } from "@grammyjs/menu";
+import {
   speedtest,
   ping,
   tracert,
@@ -7,21 +7,21 @@ const {
   internetSettingPppoeWin10,
   internetSettingPppoeWin7,
   routerSettings,
-  iptv,
   atv,
   dtv,
+  iptv,
   psbPay,
   terminalPay,
-  credit,
   abon,
   zayavki,
   blocktarif,
+  credit,
   vosstanov,
   vIp
-} = require("./constText");
+} from "./constText.js";
 
 //Главное меню бота
-const menu = new Menu("root-menu")
+export const menu = new Menu("root-menu")
   .submenu("🌐️ Интернет", "internet-menu-main")
   .row()
   .submenu("📺️ Телевиденье", "tv-menu-main")
@@ -343,5 +343,3 @@ menu.register(zayavkiPostBack, "questions-menu-main");
 menu.register(blocktarifPostBack, "questions-menu-main");
 menu.register(vosstanovPostBack, "questions-menu-main");
 menu.register(vIpPostBack, "questions-menu-main");
-
-module.exports.menu = menu;

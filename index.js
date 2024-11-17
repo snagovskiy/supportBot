@@ -1,6 +1,6 @@
-const { Bot, webhookCallback } = require("grammy");
-const { welcomeText } = require("./modules/constText");
-const { menu } = require("./modules/menu");
+import { Bot, webhookCallback } from "grammy";
+import { welcomeText } from "./modules/constText.js";
+import { menu } from "./modules/menu.js";
 
 
 const bot = new Bot(BOT_TOKEN, { botInfo: BOT_INFO });
