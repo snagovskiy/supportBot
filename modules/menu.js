@@ -18,7 +18,8 @@ import {
   blocktarif,
   vosstanov,
   vIp,
-  payberry
+  payberry,
+  sberPay
 } from "./constText.js";
 
 //Главное меню бота
@@ -221,6 +222,16 @@ const questions = new Menu("questions-menu-main")
   )
   .row()
   .text(
+    "💳 Оплата через СБЕР",
+    async (ctx) =>
+      await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/sber.png", {
+        caption: sberPay,
+        parse_mode: "Markdown",
+        reply_markup: sberPayPostBack,
+      }),
+  )
+  .row()
+  .text(
     "💳 Оплата через Payberry",
     async (ctx) =>
       await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/payberry.jpg", {
@@ -320,6 +331,7 @@ const questions = new Menu("questions-menu-main")
 
 // Кнопки возврата с поста
 const psbPayPostBack = new Menu("psbpay-back").back("↩️ Назад");
+const sberPayPostBack = new Menu("sberpay-back").back("↩️ Назад");
 const payberryPostBack = new Menu("payberry-back").back("↩️ Назад");
 const terminalPayPostBack = new Menu("terminalpay-back").back("↩️ Назад");
 const creditBack = new Menu("credit-back").back("↩️ Назад");
@@ -348,6 +360,7 @@ menu.register(atvPostBack, "tv-menu");
 menu.register(dtvPostBack, "tv-menu");
 menu.register(questions);
 menu.register(psbPayPostBack, "questions-menu-main");
+menu.register(sberPayPostBack, "questions-menu-main");
 menu.register(payberryPostBack, "questions-menu-main");
 menu.register(terminalPayPostBack, "questions-menu-main");
 menu.register(creditBack, "questions-menu-main");
