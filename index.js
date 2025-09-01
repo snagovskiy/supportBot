@@ -5,22 +5,9 @@ import { freeStorage } from '@grammyjs/storage-free';
 
 const bot = new Bot(BOT_TOKEN, { botInfo: BOT_INFO });
 
-// Интерфейс для хранения данных пользователя
-interface UserData {
-    id: number;
-    first_name: string;
-    last_name?: string;
-    username?: string;
-};
-
-// Интерфейс для структуры хранилища
-interface StorageData {
-    users: { [key: string]: UserData };
-    totalCount: number;
-};
-
 // Инициализируем хранилище
-const storage = freeStorage<StorageData>(bot.token);
+const storage = freeStorage(bot.token);
+
 
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
@@ -30,8 +17,7 @@ bot.api.setMyCommands([
 // Отвечаем на команду /start
 bot.command("start", async (ctx) => {
 
-
-    const userId = ctx.from?.id;
+const userId = ctx.from?.id;
     if (!userId) return;
 
     // Получаем текущие данные из хранилища
