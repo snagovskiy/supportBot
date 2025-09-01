@@ -71,10 +71,21 @@ bot.command("start", async (ctx) => {
 
 // Команда для показа статистики
 bot.command("stat", async (ctx) => {
+  // Проверяем, имеет ли пользователь доступ к статистике
+  if (ctx.from?.id !== ADMIN_ID) {
+    await ctx.reply("У вас нет доступа к этой команде.");
+    return;
+  }
+  
   try {
-    const userData = await getKVData();
+    let userData = { users: {}, totalCount: 0 };
+    const storedData = await BOT_STORAGE.get("user_data");
     
-    if (!userData || userData.totalCount === 0) {
+    if (storedData) {
+      userData = JSON.parse(storedData);
+    }
+    
+    if (userData.totalCount === 0) {
       await ctx.reply('Пока нет зарегистрированных пользователей');
       return;
     }
