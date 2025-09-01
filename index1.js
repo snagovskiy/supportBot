@@ -72,7 +72,7 @@ bot.command("start", async (ctx) => {
 // Команда для показа статистики
 bot.command("stat", async (ctx) => {
   // Проверяем, имеет ли пользователь доступ к статистике
-  if (ctx.from?.id !== ADMIN_ID) {
+  if (ctx.from?.id !== parseInt(ADMIN_ID)) {
     await ctx.reply("У вас нет доступа к этой команде.");
     return;
   }
