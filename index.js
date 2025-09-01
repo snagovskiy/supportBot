@@ -62,14 +62,15 @@ bot.command('stat', async (ctx) => {
             return;
         }
 
+        // Получаем последних 5 пользователей
+        const userKeys = Object.keys(data.users);
+        const lastUsers = userKeys.slice(-5).map(key => data.users[key]);
+
         await ctx.reply(
             `📊 Статистика бота:\n` +
             `👥 Всего пользователей: ${data.totalCount}\n\n` +
             `Последние 5 зарегистрированных:\n` +
-            Object.values(data.users)
-                .slice(-5)
-                .map(u => `• ${u.first_name}${u.username ? ` (@${u.username})` : ''}`)
-                .join('\n')
+            lastUsers.map(u => `• ${u.first_name}${u.username ? ` (@${u.username})` : ''}`).join('\n')
         );
     } catch (error) {
         console.error('Error reading storage:', error);
