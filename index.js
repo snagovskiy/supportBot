@@ -1,4 +1,4 @@
-import { Bot, webhookCallback } from "grammy";
+import { Bot, webhookCallback, freeStorage } from "grammy";
 import { welcomeText } from "./modules/constText.js";
 import { menu } from "./modules/menu.js";
 
