@@ -2,7 +2,6 @@ import { Bot, webhookCallback } from "grammy";
 import { welcomeText } from "./modules/constText.js";
 import { menu } from "./modules/menu.js";
 
-// Создаем экземпляр бота
 const bot = new Bot(BOT_TOKEN, { botInfo: BOT_INFO });
 
 // Добавляем команду статистики в меню бота
@@ -11,19 +10,36 @@ bot.api.setMyCommands([
   { command: "menu", description: "Главное меню" },
 ]);
 
-// Обработчик команды /start
+// Функция для получения данных из KV
+async function getKVData() {
+  try {
+    const data = await BOT_STORAGE.get("user_data");
+    return data ? JSON.parse(data) : { users: {}, totalCount: 0 };
+  } catch (error) {
+    console.error("Error getting data from KV:", error);
+    return { users: {}, totalCount: 0 };
+  }
+}
+
+// Функция для сохранения данных в KV
+async function putKVData(data) {
+  try {
+    await BOT_STORAGE.put("user_data", JSON.stringify(data));
+    return true;
+  } catch (error) {
+    console.error("Error putting data to KV:", error);
+    return false;
+  }
+}
+
+// Отвечаем на команду /start
 bot.command("start", async (ctx) => {
   const userId = ctx.from?.id;
   
   if (userId) {
     try {
       // Получаем текущие данные из KV
-      let userData = { users: {}, totalCount: 0 };
-      const storedData = await BOT_STORAGE.get("user_data");
-      
-      if (storedData) {
-        userData = JSON.parse(storedData);
-      }
+      const userData = await getKVData();
       
       // Добавляем нового пользователя если его еще нет
       if (!userData.users[userId]) {
@@ -37,7 +53,10 @@ bot.command("start", async (ctx) => {
         userData.totalCount += 1;
         
         // Сохраняем обновленные данные
-        await BOT_STORAGE.put("user_data", JSON.stringify(userData));
+        const success = await putKVData(userData);
+        if (!success) {
+          console.error("Failed to save user data to KV");
+        }
       }
     } catch (error) {
       console.error("Error in start command:", error);
@@ -53,14 +72,9 @@ bot.command("start", async (ctx) => {
 // Команда для показа статистики
 bot.command("stat", async (ctx) => {
   try {
-    let userData = { users: {}, totalCount: 0 };
-    const storedData = await BOT_STORAGE.get("user_data");
+    const userData = await getKVData();
     
-    if (storedData) {
-      userData = JSON.parse(storedData);
-    }
-    
-    if (userData.totalCount === 0) {
+    if (!userData || userData.totalCount === 0) {
       await ctx.reply('Пока нет зарегистрированных пользователей');
       return;
     }
@@ -98,14 +112,4 @@ bot.catch((err) => {
   console.error('Error in bot:', err);
 });
 
-// Обработчик fetch-событий
-addEventListener("fetch", (event) => {
-  // Получаем env из события
-  const env = event.env;
-  
-  // Устанавливаем BOT_STORAGE из env
-  globalThis.BOT_STORAGE = env.BOT_STORAGE;
-  
-  const handleRequest = webhookCallback(bot, "cloudflare");
-  event.respondWith(handleRequest(event.request));
-});
+addEventListener("fetch", webhookCallback(bot, "cloudflare"));
