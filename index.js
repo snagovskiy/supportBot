@@ -1,7 +1,6 @@
 import { Bot, webhookCallback } from "grammy";
 import { welcomeText } from "./modules/constText.js";
 import { menu } from "./modules/menu.js";
-import { freeStorage } from "@grammyjs/storage-free";
 
 const bot = new Bot(BOT_TOKEN, { botInfo: BOT_INFO });
 
