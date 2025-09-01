@@ -8,7 +8,6 @@ const bot = new Bot(BOT_TOKEN, { botInfo: BOT_INFO });
 bot.api.setMyCommands([
   { command: "start", description: "Перезапустить бот" },
   { command: "menu", description: "Главное меню" },
-  { command: "stat", description: "Статистика пользователей" },
 ]);
 
 // Функция для получения данных из KV
