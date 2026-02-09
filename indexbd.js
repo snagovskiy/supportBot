@@ -3,8 +3,8 @@ import { Menu } from "@grammyjs/menu";
 
 // ============ D1 База данных (TextDatabase) ============
 class TextDatabase {
-  constructor(env) {
-    this.db = env.DB;
+  constructor(db) {
+    this.db = db;
   }
 
   async getText(key) {
@@ -42,12 +42,12 @@ let textsCache = null;
 let cacheTimestamp = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 минут
 
-async function getTextsWithCache(env) {
+async function getTextsWithCache(db) {
   const now = Date.now();
   
   if (!textsCache || (now - cacheTimestamp) > CACHE_TTL) {
-    const db = new TextDatabase(env);
-    textsCache = await db.getAllTexts();
+    const textDb = new TextDatabase(db);
+    textsCache = await textDb.getAllTexts();
     cacheTimestamp = now;
     console.log('Texts cache updated');
   }
@@ -56,9 +56,9 @@ async function getTextsWithCache(env) {
 }
 
 // ============ Фабрика меню с динамической загрузкой текстов ============
-function createMenu() {
-  async function getTexts(ctx) {
-    return await getTextsWithCache(ctx.env);
+function createMenu(db) {
+  async function getTexts() {
+    return await getTextsWithCache(db);
   }
 
   // Главное меню бота
@@ -87,7 +87,7 @@ function createMenu() {
     .text(
       "🚀️ Проверка скорости интернета",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://beehosting.pro/wp-content/uploads/2021/12/test-skorosti-interneta-v-linux.jpg",
           {
@@ -102,7 +102,7 @@ function createMenu() {
     .text(
       "🏓 Проверка на разрывы Ping",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://i.ibb.co/q56nkBX/2023-09-15-16-36-17.png",
           {
@@ -117,7 +117,7 @@ function createMenu() {
     .text(
       "🛣 Трассировка маршрута",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://i.ibb.co/jhXmvx8/2023-09-15-20-35-43.png",
           {
@@ -141,7 +141,7 @@ function createMenu() {
     .text(
       "🛠 Настройка подключения IPoE",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
           {
@@ -165,7 +165,7 @@ function createMenu() {
     .text(
       "🛠 Настройка подключения на Windows 10/11",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
           {
@@ -180,7 +180,7 @@ function createMenu() {
     .text(
       "🛠 Настройка подключения на Windows 7",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
           {
@@ -195,7 +195,7 @@ function createMenu() {
     .text(
       "🛠 Настройка подключения на маршрутизаторах",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
           {
@@ -221,7 +221,7 @@ function createMenu() {
     .text(
       "🖥 IPTV",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/56kv7zQ/iptv.webp", {
           caption: texts.iptv || "🤖️ Смотреть IPTV можно традиционно на телевизоре...",
           parse_mode: "Markdown",
@@ -240,7 +240,7 @@ function createMenu() {
     .text(
       "🛠 Настройка аналогового ТВ",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/dttvSg0/atv.jpg", {
           caption: texts.atv || "🤖️ *Аналоговое вещание* — это устаревающий...",
           parse_mode: "Markdown",
@@ -252,7 +252,7 @@ function createMenu() {
     .text(
       "🛠 Настройка цифрового ТВ",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/WsNS2XP/dtv.jpg", {
           caption: texts.dtv || "🤖️ *Цифровое ТВ* – это телевидение нового поколения...",
           parse_mode: "Markdown",
@@ -272,7 +272,7 @@ function createMenu() {
     .text(
       "💳 Оплата через ПСБ",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/S0vQfFn/psbpay.jpg", {
           caption: texts.psbPay || "🤖️ Чтобы оплатить услуги интернета...",
           parse_mode: "Markdown",
@@ -284,7 +284,7 @@ function createMenu() {
     .text(
       "💳 Оплата через СБЕР",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/sber.png", {
           caption: texts.sberPay || "🤖️ Чтобы оплатить услуги интернета...",
           parse_mode: "Markdown",
@@ -296,7 +296,7 @@ function createMenu() {
     .text(
       "💳 Оплата через Payberry",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/payberry.jpg", {
           caption: texts.payberry || "🤖 Теперь Вы можете оплатить наши услуги...",
           parse_mode: "Markdown",
@@ -308,7 +308,7 @@ function createMenu() {
     .text(
       "💳 Оплата через терминал",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/L1rVPmQ/terminal.jpg", {
           caption: texts.terminalPay || "🤖️ Чтобы оплатить услуги интернета...",
           parse_mode: "Markdown",
@@ -320,7 +320,7 @@ function createMenu() {
     .text(
       "💳 Услуга кредит",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/0jJgLrG/credit.jpg", {
           caption: texts.credit || "🤖️ Данная услуга дает возможность подключить интернет...",
           parse_mode: "Markdown",
@@ -337,7 +337,7 @@ function createMenu() {
     .text(
       "🏤 Адреса абонентских отделов",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto(
           "https://i.ibb.co/bPwFj57/IMG-20231013-145736-615-01.jpg",
           {
@@ -352,7 +352,7 @@ function createMenu() {
     .text(
       "⏳ Сроки выполнения заявок",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/qpV7DWc/remont.jpg", {
           caption: texts.zayavki || "🤖 Все заявки выполняются в порядке очереди...",
           parse_mode: "Markdown",
@@ -364,7 +364,7 @@ function createMenu() {
     .text(
       "🔒 Блокировка/разблокировка тарифов",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.replyWithPhoto("https://i.ibb.co/vVR2JFK/block.jpg", {
           caption: texts.blocktarif || "🤖️ Блокировка/разблокировка тарифов...",
           parse_mode: "Markdown",
@@ -376,7 +376,7 @@ function createMenu() {
     .text(
       "✅ Восстановление услуг",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.reply(texts.vosstanov || "🤖 Если с момента последнего выхода...", {
           parse_mode: "Markdown",
           reply_markup: vosstanovPostBack,
@@ -387,7 +387,7 @@ function createMenu() {
     .text(
       "📎 Выделенный IP адрес",
       async (ctx) => {
-        const texts = await getTexts(ctx);
+        const texts = await getTexts();
         await ctx.reply(texts.vIp || "🤖 Стоимость услуги «Выделенный IP адрес»...", {
           parse_mode: "Markdown",
           reply_markup: vIpPostBack,
@@ -452,155 +452,162 @@ function createMenu() {
 }
 
 // ============ Основной код бота ============
-const bot = new Bot(BOT_TOKEN, { botInfo: BOT_INFO });
-
-// Добавляем команду статистики в меню бота
-bot.api.setMyCommands([
-  { command: "start", description: "Перезапустить бот" },
-  { command: "menu", description: "Главное меню" },
-  { command: "stat", description: "Статистика бота (только для админа)" },
-]);
-
-// Функция для получения данных из KV
-async function getKVData(env) {
-  try {
-    const data = await env.BOT_STORAGE.get("user_data");
-    return data ? JSON.parse(data) : { users: {}, totalCount: 0 };
-  } catch (error) {
-    console.error("Error getting data from KV:", error);
-    return { users: {}, totalCount: 0 };
-  }
-}
-
-// Функция для сохранения данных в KV
-async function putKVData(env, data) {
-  try {
-    await env.BOT_STORAGE.put("user_data", JSON.stringify(data));
-    return true;
-  } catch (error) {
-    console.error("Error putting data to KV:", error);
-    return false;
-  }
-}
-
-// Отвечаем на команду /start
-bot.command("start", async (ctx) => {
-  const userId = ctx.from?.id;
-  const env = ctx.env;
-  
-  if (userId) {
-    try {
-      // Получаем текущие данные из KV
-      const userData = await getKVData(env);
-      
-      // Добавляем нового пользователя если его еще нет
-      if (!userData.users[userId]) {
-        userData.users[userId] = {
-          id: userId,
-          first_name: ctx.from.first_name,
-          last_name: ctx.from.last_name || "",
-          username: ctx.from.username || "",
-          joined: new Date().toISOString()
-        };
-        userData.totalCount += 1;
-        
-        // Сохраняем обновленные данные
-        const success = await putKVData(env, userData);
-        if (!success) {
-          console.error("Failed to save user data to KV");
-        }
-      }
-    } catch (error) {
-      console.error("Error in start command:", error);
-    }
-  }
-  
-  await ctx.reply(`<b>${ctx.from?.first_name}</b>, <b>привет!</b> 😀️ \n\n🤖️ Меня зовут Виталик. \n\n⛑️ Я помогу тебе настроить доступ к интернету и телевидению, а также диагностировать неисправности, ответить на часто задаваемые вопросы. \n\n📋️ Перейти в меню /menu`, {
-    parse_mode: "HTML",
-    disable_web_page_preview: true,
-  });
-});
-
-// Команда для показа статистики
-bot.command("stat", async (ctx) => {
-  const env = ctx.env;
-  
-  // Проверяем, имеет ли пользователь доступ к статистике
-  if (ctx.from?.id !== parseInt(env.ADMIN_ID)) {
-    await ctx.reply("У вас нет доступа к этой команде.");
-    return;
-  }
-  
-  try {
-    let userData = { users: {}, totalCount: 0 };
-    const storedData = await env.BOT_STORAGE.get("user_data");
-    
-    if (storedData) {
-      userData = JSON.parse(storedData);
-    }
-    
-    if (userData.totalCount === 0) {
-      await ctx.reply('Пока нет зарегистрированных пользователей');
-      return;
-    }
-
-    // Преобразуем объект пользователей в массив и сортируем по дате присоединения
-    const usersArray = Object.values(userData.users);
-    usersArray.sort((a, b) => new Date(b.joined) - new Date(a.joined));
-    
-    // Берем последних 5 пользователей
-    const lastUsers = usersArray.slice(0, 5);
-
-    await ctx.reply(
-      `📊 <b>Статистика бота</b>\n` +
-      `👥 Всего пользователей: <b>${userData.totalCount}</b>\n\n` +
-      `<b>Последние 5 зарегистрированных:</b>\n` +
-      lastUsers.map(u => `• ${u.first_name}${u.last_name ? ` ${u.last_name}` : ''}${u.username ? ` (@${u.username})` : ''}`).join('\n'),
-      { parse_mode: "HTML" }
-    );
-  } catch (error) {
-    console.error('Error in stat command:', error);
-    await ctx.reply('Произошла ошибка при получении статистики');
-  }
-});
-
-// Команда для обновления кэша текстов (только для админа)
-bot.command("clearcache", async (ctx) => {
-  const env = ctx.env;
-  
-  if (ctx.from?.id !== parseInt(env.ADMIN_ID)) {
-    await ctx.reply("У вас нет доступа к этой команде.");
-    return;
-  }
-  
-  textsCache = null;
-  cacheTimestamp = 0;
-  await ctx.reply("✅ Кэш текстов очищен. При следующем запросе данные будут загружены из базы.");
-});
-
-// Подключение меню
-const menu = createMenu();
-bot.use(menu);
-
-bot.command("menu", async (ctx) => {
-  // Отправляем меню.
-  await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
-});
-
-// Обработка ошибок
-bot.catch((err) => {
-  console.error('Error in bot:', err);
-});
-
-// Cloudflare Worker обработчик
 export default {
   async fetch(request, env, ctx) {
-    // Добавляем env в контекст бота
-    bot.use(async (ctx, next) => {
-      ctx.env = env;
-      await next();
-    });
-    
-    return await webhookCallback(bot, "cloudflare")(request);
+    try {
+      // Проверяем наличие необходимых переменных
+      if (!env.BOT_TOKEN) {
+        console.error("BOT_TOKEN is not defined");
+        return new Response("BOT_TOKEN is not defined", { status: 500 });
+      }
+
+      // Инициализируем бота с переменными из env
+      const bot = new Bot(env.BOT_TOKEN);
+      
+      // Добавляем команды в меню бота
+      await bot.api.setMyCommands([
+        { command: "start", description: "Перезапустить бот" },
+        { command: "menu", description: "Главное меню" },
+        { command: "stat", description: "Статистика бота (только для админа)" },
+      ]);
+
+      // Инициализируем базу данных
+      const textDb = new TextDatabase(env.DB);
+      
+      // Создаем меню
+      const menu = createMenu(env.DB);
+      
+      // Подключаем меню к боту
+      bot.use(menu);
+
+      // Функция для получения данных из KV
+      async function getKVData() {
+        try {
+          const data = await env.BOT_STORAGE.get("user_data");
+          return data ? JSON.parse(data) : { users: {}, totalCount: 0 };
+        } catch (error) {
+          console.error("Error getting data from KV:", error);
+          return { users: {}, totalCount: 0 };
+        }
+      }
+
+      // Функция для сохранения данных в KV
+      async function putKVData(data) {
+        try {
+          await env.BOT_STORAGE.put("user_data", JSON.stringify(data));
+          return true;
+        } catch (error) {
+          console.error("Error putting data to KV:", error);
+          return false;
+        }
+      }
+
+      // Команда /start
+      bot.command("start", async (ctx) => {
+        const userId = ctx.from?.id;
+        
+        if (userId) {
+          try {
+            // Получаем текущие данные из KV
+            const userData = await getKVData();
+            
+            // Добавляем нового пользователя если его еще нет
+            if (!userData.users[userId]) {
+              userData.users[userId] = {
+                id: userId,
+                first_name: ctx.from.first_name,
+                last_name: ctx.from.last_name || "",
+                username: ctx.from.username || "",
+                joined: new Date().toISOString()
+              };
+              userData.totalCount += 1;
+              
+              // Сохраняем обновленные данные
+              const success = await putKVData(userData);
+              if (!success) {
+                console.error("Failed to save user data to KV");
+              }
+            }
+          } catch (error) {
+            console.error("Error in start command:", error);
+          }
+        }
+        
+        await ctx.reply(`<b>${ctx.from?.first_name}</b>, <b>привет!</b> 😀️ \n\n🤖️ Меня зовут Виталик. \n\n⛑️ Я помогу тебе настроить доступ к интернету и телевидению, а также диагностировать неисправности, ответить на часто задаваемые вопросы. \n\n📋️ Перейти в меню /menu`, {
+          parse_mode: "HTML",
+          disable_web_page_preview: true,
+        });
+      });
+
+      // Команда /stat
+      bot.command("stat", async (ctx) => {
+        // Проверяем, имеет ли пользователь доступ к статистике
+        if (ctx.from?.id !== parseInt(env.ADMIN_ID)) {
+          await ctx.reply("У вас нет доступа к этой команде.");
+          return;
+        }
+        
+        try {
+          let userData = { users: {}, totalCount: 0 };
+          const storedData = await env.BOT_STORAGE.get("user_data");
+          
+          if (storedData) {
+            userData = JSON.parse(storedData);
+          }
+          
+          if (userData.totalCount === 0) {
+            await ctx.reply('Пока нет зарегистрированных пользователей');
+            return;
+          }
+
+          // Преобразуем объект пользователей в массив и сортируем по дате присоединения
+          const usersArray = Object.values(userData.users);
+          usersArray.sort((a, b) => new Date(b.joined) - new Date(a.joined));
+          
+          // Берем последних 5 пользователей
+          const lastUsers = usersArray.slice(0, 5);
+
+          await ctx.reply(
+            `📊 <b>Статистика бота</b>\n` +
+            `👥 Всего пользователей: <b>${userData.totalCount}</b>\n\n` +
+            `<b>Последние 5 зарегистрированных:</b>\n` +
+            lastUsers.map(u => `• ${u.first_name}${u.last_name ? ` ${u.last_name}` : ''}${u.username ? ` (@${u.username})` : ''}`).join('\n'),
+            { parse_mode: "HTML" }
+          );
+        } catch (error) {
+          console.error('Error in stat command:', error);
+          await ctx.reply('Произошла ошибка при получении статистики');
+        }
+      });
+
+      // Команда /clearcache
+      bot.command("clearcache", async (ctx) => {
+        if (ctx.from?.id !== parseInt(env.ADMIN_ID)) {
+          await ctx.reply("У вас нет доступа к этой команде.");
+          return;
+        }
+        
+        textsCache = null;
+        cacheTimestamp = 0;
+        await ctx.reply("✅ Кэш текстов очищен. При следующем запросе данные будут загружены из базы.");
+      });
+
+      // Команда /menu
+      bot.command("menu", async (ctx) => {
+        await ctx.reply("Выберите нужный пункт в меню:", { reply_markup: menu });
+      });
+
+      // Обработка ошибок
+      bot.catch((err) => {
+        console.error('Error in bot:', err);
+      });
+
+      // Возвращаем обработчик вебхука
+      return webhookCallback(bot, "cloudflare")(request);
+      
+    } catch (error) {
+      console.error("Error initializing bot:", error);
+      return new Response(`Internal Server Error: ${error.message}`, { status: 500 });
+    }
   }
 };
