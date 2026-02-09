@@ -1,11 +1,6 @@
 import { Menu } from "@grammyjs/menu";
 import { getTextsWithCache } from "./database.js";
 
-// Вспомогательная функция для получения текстов
-async function getTexts(ctx) {
-  return await getTextsWithCache(ctx.env);
-}
-
 // Фабрика для создания меню с динамической загрузкой текстов
 export function createMenu() {
   // Главное меню бота
@@ -34,45 +29,60 @@ export function createMenu() {
     .text(
       "🚀️ Проверка скорости интернета",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://beehosting.pro/wp-content/uploads/2021/12/test-skorosti-interneta-v-linux.jpg",
-          {
-            caption: texts.speedtest || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: speedtestPostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://beehosting.pro/wp-content/uploads/2021/12/test-skorosti-interneta-v-linux.jpg",
+            {
+              caption: texts.speedtest || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: speedtestPostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in speedtest menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "🏓 Проверка на разрывы Ping",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://i.ibb.co/q56nkBX/2023-09-15-16-36-17.png",
-          {
-            caption: texts.ping || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: pingPostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://i.ibb.co/q56nkBX/2023-09-15-16-36-17.png",
+            {
+              caption: texts.ping || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: pingPostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in ping menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "🛣 Трассировка маршрута",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://i.ibb.co/jhXmvx8/2023-09-15-20-35-43.png",
-          {
-            caption: texts.tracert || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: tracertPostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://i.ibb.co/jhXmvx8/2023-09-15-20-35-43.png",
+            {
+              caption: texts.tracert || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: tracertPostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in tracert menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -88,15 +98,20 @@ export function createMenu() {
     .text(
       "🛠 Настройка подключения IPoE",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
-          {
-            caption: texts.internetSettingIpoe || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: ipoePostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
+            {
+              caption: texts.internetSettingIpoe || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: ipoePostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in IPoE menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -112,45 +127,60 @@ export function createMenu() {
     .text(
       "🛠 Настройка подключения на Windows 10/11",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
-          {
-            caption: texts.internetSettingPppoeWin10 || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: pppoeWin10PostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
+            {
+              caption: texts.internetSettingPppoeWin10 || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: pppoeWin10PostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in Windows 10 menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "🛠 Настройка подключения на Windows 7",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
-          {
-            caption: texts.internetSettingPppoeWin7 || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: pppoeWin7PostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
+            {
+              caption: texts.internetSettingPppoeWin7 || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: pppoeWin7PostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in Windows 7 menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "🛠 Настройка подключения на маршрутизаторах",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
-          {
-            caption: texts.routerSettings || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: pppoeRouterPostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://etype.ru/image/catalog/novosti/2022/kakvybrattarif/stoimostpodklucheniyainterneta.png",
+            {
+              caption: texts.routerSettings || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: pppoeRouterPostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in router settings menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -168,12 +198,17 @@ export function createMenu() {
     .text(
       "🖥 IPTV",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/56kv7zQ/iptv.webp", {
-          caption: texts.iptv || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: iptvPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/56kv7zQ/iptv.webp", {
+            caption: texts.iptv || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: iptvPostBack,
+          });
+        } catch (error) {
+          console.error("Error in IPTV menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -187,24 +222,34 @@ export function createMenu() {
     .text(
       "🛠 Настройка аналогового ТВ",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/dttvSg0/atv.jpg", {
-          caption: texts.atv || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: atvPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/dttvSg0/atv.jpg", {
+            caption: texts.atv || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: atvPostBack,
+          });
+        } catch (error) {
+          console.error("Error in ATV menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "🛠 Настройка цифрового ТВ",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/WsNS2XP/dtv.jpg", {
-          caption: texts.dtv || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: dtvPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/WsNS2XP/dtv.jpg", {
+            caption: texts.dtv || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: dtvPostBack,
+          });
+        } catch (error) {
+          console.error("Error in DTV menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -219,60 +264,85 @@ export function createMenu() {
     .text(
       "💳 Оплата через ПСБ",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/S0vQfFn/psbpay.jpg", {
-          caption: texts.psbPay || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: psbPayPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/S0vQfFn/psbpay.jpg", {
+            caption: texts.psbPay || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: psbPayPostBack,
+          });
+        } catch (error) {
+          console.error("Error in PSB Pay menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "💳 Оплата через СБЕР",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/sber.png", {
-          caption: texts.sberPay || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: sberPayPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/sber.png", {
+            caption: texts.sberPay || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: sberPayPostBack,
+          });
+        } catch (error) {
+          console.error("Error in Sber Pay menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "💳 Оплата через Payberry",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/payberry.jpg", {
-          caption: texts.payberry || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: payberryPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://raw.githubusercontent.com/snagovskiy/supportBot/refs/heads/main/img/payberry.jpg", {
+            caption: texts.payberry || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: payberryPostBack,
+          });
+        } catch (error) {
+          console.error("Error in Payberry menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "💳 Оплата через терминал",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/L1rVPmQ/terminal.jpg", {
-          caption: texts.terminalPay || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: terminalPayPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/L1rVPmQ/terminal.jpg", {
+            caption: texts.terminalPay || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: terminalPayPostBack,
+          });
+        } catch (error) {
+          console.error("Error in terminal pay menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "💳 Услуга кредит",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/0jJgLrG/credit.jpg", {
-          caption: texts.credit || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: creditBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/0jJgLrG/credit.jpg", {
+            caption: texts.credit || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: creditBack,
+          });
+        } catch (error) {
+          console.error("Error in credit menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -284,61 +354,86 @@ export function createMenu() {
     .text(
       "🏤 Адреса абонентских отделов",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto(
-          "https://i.ibb.co/bPwFj57/IMG-20231013-145736-615-01.jpg",
-          {
-            caption: texts.abon || "Текст скоро будет загружен...",
-            parse_mode: "Markdown",
-            reply_markup: abonPostBack,
-          }
-        );
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto(
+            "https://i.ibb.co/bPwFj57/IMG-20231013-145736-615-01.jpg",
+            {
+              caption: texts.abon || "Текст скоро будет загружен...",
+              parse_mode: "Markdown",
+              reply_markup: abonPostBack,
+            }
+          );
+        } catch (error) {
+          console.error("Error in abon menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "⏳ Сроки выполнения заявок",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/qpV7DWc/remont.jpg", {
-          caption: texts.zayavki || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: zayavkiPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/qpV7DWc/remont.jpg", {
+            caption: texts.zayavki || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: zayavkiPostBack,
+          });
+        } catch (error) {
+          console.error("Error in zayavki menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "🔒 Блокировка/разблокировка тарифов",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.replyWithPhoto("https://i.ibb.co/vVR2JFK/block.jpg", {
-          caption: texts.blocktarif || "Текст скоро будет загружен...",
-          parse_mode: "Markdown",
-          reply_markup: blocktarifPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.replyWithPhoto("https://i.ibb.co/vVR2JFK/block.jpg", {
+            caption: texts.blocktarif || "Текст скоро будет загружен...",
+            parse_mode: "Markdown",
+            reply_markup: blocktarifPostBack,
+          });
+        } catch (error) {
+          console.error("Error in blocktarif menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "✅ Восстановление услуг",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.reply(texts.vosstanov || "Текст скоро будет загружен...", {
-          parse_mode: "Markdown",
-          reply_markup: vosstanovPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.reply(texts.vosstanov || "Текст скоро будет загружен...", {
+            parse_mode: "Markdown",
+            reply_markup: vosstanovPostBack,
+          });
+        } catch (error) {
+          console.error("Error in vosstanov menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
     .text(
       "📎 Выделенный IP адрес",
       async (ctx) => {
-        const texts = await getTexts(ctx);
-        await ctx.reply(texts.vIp || "Текст скоро будет загружен...", {
-          parse_mode: "Markdown",
-          reply_markup: vIpPostBack,
-        });
+        try {
+          const texts = await getTextsWithCache(ctx.env);
+          await ctx.reply(texts.vIp || "Текст скоро будет загружен...", {
+            parse_mode: "Markdown",
+            reply_markup: vIpPostBack,
+          });
+        } catch (error) {
+          console.error("Error in vIp menu:", error);
+          await ctx.reply("Произошла ошибка при загрузке текста. Попробуйте позже.");
+        }
       }
     )
     .row()
@@ -397,6 +492,3 @@ export function createMenu() {
 
   return menu;
 }
-
-// Экспортируем фабрику для создания меню
-export const menu = createMenu();
