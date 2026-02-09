@@ -1,6 +1,7 @@
 name = "alnetbot"
 main = "./indexbd.js"
 compatibility_date = "2024-03-04"
+compatibility_flags = ["nodejs_compat"]
 [placement]
 mode = "smart"
 [observability]

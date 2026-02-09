@@ -1,6 +1,6 @@
 import { Bot, webhookCallback } from "grammy";
 import { createMenu } from "./modules/menu1.js";
-import { getTextsWithCache } from "./modules/database.js";
+import { getTextsWithCache, clearTextsCache } from "./modules/database.js";
 
 // Экспортируем обработчик как ES Module
 export default {
