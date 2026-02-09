@@ -20,6 +20,7 @@ export default {
         { command: "start", description: "Перезапустить бот" },
         { command: "menu", description: "Главное меню" },
         { command: "stat", description: "Статистика бота (только для админа)" },
+        { command: "clearcache", description: "Очистить кэш (админ)" }
       ]);
 
       // Создаем middleware для передачи env в контекст
@@ -96,7 +97,7 @@ export default {
       // Команда /stat
       bot.command("stat", async (ctx) => {
         // Проверяем, имеет ли пользователь доступ к статистике
-        if (ctx.from?.id !== parseInt(env.ADMIN_ID)) {
+        if (!env.ADMIN_ID || ctx.from?.id !== parseInt(env.ADMIN_ID)) {
           await ctx.reply("У вас нет доступа к этой команде.");
           return;
         }
@@ -141,13 +142,12 @@ export default {
 
       // Команда /clearcache (только для админа)
       bot.command("clearcache", async (ctx) => {
-        if (ctx.from?.id !== parseInt(env.ADMIN_ID)) {
+        if (!env.ADMIN_ID || ctx.from?.id !== parseInt(env.ADMIN_ID)) {
           await ctx.reply("У вас нет доступа к этой команде.");
           return;
         }
         
-        // Используем функцию clearTextsCache из database.js
-        const { clearTextsCache } = await import('./database.js');
+        // Очищаем кэш
         clearTextsCache();
         await ctx.reply("✅ Кэш текстов очищен. При следующем запросе данные будут загружены из базы.");
       });
