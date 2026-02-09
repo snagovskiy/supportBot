@@ -11,8 +11,3 @@ head_sampling_rate = 1
 [[kv_namespaces]]
 binding = "BOT_STORAGE"
 id = "487bdf90873f4a25b44c0b62eec39762"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "bot-texts-db"
-database_id = "4cb5f754-77e2-411b-a8c0-8d486caf2d75"
